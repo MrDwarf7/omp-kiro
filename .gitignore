@@ -1,0 +1,9 @@
+node_modules/
+.codebase-context/
+*.sqlite3
+*.sqlite3-*
+*.bak
+.env
+.env.*
+*.log
+.DS_Store
