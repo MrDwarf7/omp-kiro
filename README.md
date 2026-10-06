@@ -62,8 +62,18 @@ kiro (21)
 ## Install
 
 ```sh
-git clone https://github.com/MrDwarf7/omp-kiro.git
-omp plugin link ./omp-kiro
+omp plugin install github:MrDwarf7/omp-kiro
+```
+
+omp clones the repo into its own plugins folder (`~/.omp/plugins`) and checks
+that the extension loads before enabling it. To pin a version, append a tag or
+commit: `github:MrDwarf7/omp-kiro#<tag-or-commit>`.
+
+Update or remove it later with:
+
+```sh
+omp plugin upgrade omp-kiro
+omp plugin uninstall omp-kiro
 ```
 
 Check that the models are there, then use one:
@@ -78,8 +88,8 @@ omp --model kiro/claude-sonnet-5.5 --thinking high
 > `kiro/<model>:high` form isn't resolved at startup for extension providers. It
 > does work inside a running session.
 
-No `bun install` is needed to use the plugin. omp supplies the `@oh-my-pi/*`
-packages it imports.
+Nothing else gets installed. The plugin has no runtime dependencies, and omp
+supplies the `@oh-my-pi/*` packages it imports.
 
 ## How it works
 
@@ -139,6 +149,15 @@ instance in `ap-southeast-2` can still have its Kiro profile in `us-east-1`.
 
 ## Development
 
+For working on the plugin, link a local checkout instead of installing it. omp
+then loads your working tree directly, so edits apply on the next `omp` start:
+
+```sh
+git clone https://github.com/MrDwarf7/omp-kiro.git
+cd omp-kiro
+omp plugin link .
+```
+
 ```sh
 bun install          # dev-only: type packages and the TypeScript compiler
 bun test             # 70 tests, no network
@@ -147,6 +166,10 @@ bunx tsc --noEmit    # strict typecheck
 
 The tests use a captured `ListAvailableModels` response (`test/fixtures/`) and
 locally built event-stream frames. They never contact Kiro.
+
+`omp plugin link` and `omp plugin install` both register the plugin under the
+name `omp-kiro`, so the most recent one wins. Run the other command to switch
+back.
 
 ## Troubleshooting
 
