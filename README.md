@@ -1,6 +1,7 @@
-<div align="center">
+<!-- rumdl-disable MD033 -->
+<h1 align="center">omp-kiro</h1>
 
-# omp-kiro
+<div align="center">
 
 **Use the models from your Kiro subscription inside
 [oh-my-pi](https://github.com/can1357/oh-my-pi) (`omp`).**
@@ -10,8 +11,8 @@
 ![language](https://img.shields.io/badge/TypeScript-strict-3178c6?style=for-the-badge&logo=typescript&logoColor=white)
 ![deps](https://img.shields.io/badge/runtime_deps-0-22c55e?style=for-the-badge)
 ![tests](https://img.shields.io/badge/tests-70_passing-22c55e?style=for-the-badge)
-
 </div>
+<!-- rumdl-enable MD033 -->
 
 ---
 
@@ -66,8 +67,11 @@ omp plugin install github:MrDwarf7/omp-kiro
 ```
 
 omp clones the repo into its own plugins folder (`~/.omp/plugins`) and checks
-that the extension loads before enabling it. To pin a version, append a tag or
-commit: `github:MrDwarf7/omp-kiro#<tag-or-commit>`.
+that the extension loads before enabling it. Install a specific release by
+pinning its tag, for example `github:MrDwarf7/omp-kiro#v0.1.0`. To publish a
+later release, update `package.json`, run the tests and typecheck, commit, then
+push a matching `v<version>` tag. GitHub creates the release with generated
+notes.
 
 Update or remove it later with:
 
@@ -96,7 +100,7 @@ supplies the `@oh-my-pi/*` packages it imports.
 ```mermaid
 flowchart LR
     omp["omp agent"] -- "Context: messages, tools" --> plugin["omp-kiro"]
-    plugin -- "reads and refreshes login" --> store[("kiro-cli sqlite<br/>or Kiro IDE token")]
+    plugin -- "refreshes login" --> store[("kiro-cli DB<br/>or Kiro IDE token")]
     plugin -- "ListAvailableModels<br/>GetUsageLimits" --> mgmt["management.&lt;region&gt;.kiro.dev"]
     plugin -- "generateAssistantResponse<br/>(JSON in)" --> runtime["runtime.&lt;region&gt;.kiro.dev"]
     runtime -- "AWS event-stream<br/>(binary frames out)" --> plugin
